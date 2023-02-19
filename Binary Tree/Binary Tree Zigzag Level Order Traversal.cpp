@@ -1,56 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
+    int calHeight(TreeNode *root) {
+        if(!root)
+            return 0;
+        return 1 + max(calHeight(root->left), calHeight(root->right));
+    }
+    
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector <TreeNode*> parent , child;
-        vector<vector<int> > result;
+        // using level order traversal
         
-        if(root==NULL)
-            return result;
+        // calculating the height
+        int height = calHeight(root);
+        if(height == 0)
+            return {};
         
-        parent.push_back(root);
-        vector<int> innerVector;
-        innerVector.push_back(root->val);
-        result.push_back(innerVector);
-        innerVector.clear();
-        int f=1;
+        list<int> res2[height];
+        vector<vector<int>> res(height);
         
-        while(!parent.empty())
-        {
-            if((parent.front())->left!=NULL)
-            {
-                child.push_back((parent.front())->left);
-                innerVector.push_back(((parent.front())->left)->val);
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        while(!q.empty()) {
+            TreeNode * node = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            if(level%2 == 0) {
+                // i.e; even level
+                res2[level].push_back(node->val);
+            } else {
+                // i.e; odd level
+                res2[level].push_front(node->val);
             }
-            
-            if((parent.front())->right!=NULL)
-            {
-                child.push_back((parent.front())->right);
-                innerVector.push_back(((parent.front())->right)->val);
+            if(node->left != NULL) {
+                q.push({node->left,level+1});
             }
-            
-            parent.erase(parent.begin());
-            
-            if(parent.empty() && child.empty())
-                break;
-            
-            if(parent.empty())
-            {
-                if(f==1)
-                {
-                    reverse(innerVector.begin() , innerVector.end());
-                }
-                f*=-1;
-                result.push_back(innerVector);
-                copy(child.begin() , child.end() , back_inserter(parent));
-                child.clear();
-                innerVector.clear();
+            if(node->right != NULL) {
+                q.push({node->right, level+1});
             }
         }
         
-        return result;
+        for(int i=0 ; i<height ; i++) {
+            for(auto x: res2[i]) {
+                res[i].push_back(x);
+            }
+        }
+        
+        return res;
     }
 };
-
 
 
 LEETCODE 103
