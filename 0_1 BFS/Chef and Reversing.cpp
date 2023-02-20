@@ -34,7 +34,10 @@ int main() {
 	    int x,y;
 	    cin>>x>>y;
 	    if(x == y) continue;
+		// if edge exists the weight = 0
 	    graph[x].push_back({y,0});
+		// otherwise a reverse edge is required so weight = 1
+		// check the notebook for god sake
 	    graph[y].push_back({x,1});
 	}
 	
