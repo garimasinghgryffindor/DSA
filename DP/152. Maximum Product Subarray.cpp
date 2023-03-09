@@ -29,6 +29,21 @@
 // };
 
 
+Optimized approach:
+First of all, Let's think about all the patterns that we can observe in this problem.
+
+If all the numbers are positive the product is always increasing.
+But when it comes to negative numbers, It gets alot more tricky as the product of two negatives, is a positive.
+When we have a vector of all negatives, the signs of the product will be alternating.
+eg. {-1,-2,-3,-4,-5} => -1, 2, -6, 24, -120
+        
+so, to find maximum in such case, we need to track both maximum and minimum.
+example, in {-1,-2,-3} max of first two elements will be 2 and min will be -2
+but when combined with the third element -3, our min will become -2*-3 = 6 which is our desired answer.
+I hope the reason of storing minimum is pretty clear now.
+
+
+
 
 class Solution {
 public:
