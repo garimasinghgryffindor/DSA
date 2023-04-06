@@ -1,81 +1,98 @@
-#include <iostream>
-#include <stack>
-using namespace std;
-
-class stack2{
-    public:
-    stack<int> st;
-    int minEle;
-
-    void getMin() {
-        if(st.empty()) {
-            cout<<"stack is empty\n";
-            return;
-        }
-        cout<<"minimum element in the stack is:   "<<minEle<<endl;
-    }
-
-    void push(int x) {
-        if(st.empty()) {
-            minEle = x;
-            st.push(x);
-            return;
-        }
-        if(x < minEle) {
-            st.push(2*x - minEle);
-            minEle = x;
+class MinStack {
+public:
+    vector<pair<int,int>> st;
+    MinStack() { }
+    
+    void push(int val) {
+        if(st.empty()){
+            st.push_back({val,val});
         } else {
-            st.push(x);
+            st.push_back({val , min(val , st.back().second)});
         }
-
-        return;
     }
-
+    
     void pop() {
-        if(st.empty()) {
-            cout<<"stack is empty!\n";
+        if(st.empty())
             return;
-        }
-
-        int t = st.top();
-        st.pop();
-        if(t < minEle) {
-            cout<<minEle<<endl;
-            minEle = 2*minEle - t;
-            return;
-        }
-        cout<<t<<endl;
+        st.pop_back();
     }
-
-    void peek() {
-        if(st.empty()) {
-            cout<<"stack is empty!\n";
-            return;
-        }
-
-        int t = st.top();
-        if(t < minEle) {
-            cout<<minEle<<endl;
-            return;
-        }
-        cout<<t<<endl;
+    
+    int top() {
+        if(st.empty())
+            return NULL;
+        return (st.back()).first;
+    }
+    
+    int getMin() {
+        if(st.empty())
+            return NULL;
+        return (st.back()).second;
     }
 };
 
-int main()
-{
-    stack2 stk;
 
-    stk.push(3);
-	stk.push(5);
-	stk.getMin();
-	stk.push(2);
-	stk.push(1);
-	stk.getMin();
-	stk.pop();
-	stk.getMin();
-	stk.pop();
-	stk.peek();
 
-    return 0;
-}
+
+class MinStack {
+public:
+    stack<long>st;
+    long minm = INT_MAX;
+    
+    MinStack() { }
+    
+    void push(int val) {
+        if(st.empty()) {
+            minm = val;
+            st.push(val);
+            return;
+        }
+        
+        if(val <= minm) {
+            int prevMin = minm;
+            minm = val;
+            st.push(2ll*minm - prevMin);
+        } else {
+            st.push(val);
+        }
+    }
+    
+    void pop() {
+        if(st.empty()) {
+            return;
+        }
+        
+        if(st.top() <= minm) {
+            // minm changed here
+            minm = 2*minm - st.top();
+            st.pop();
+        } else {
+            st.pop();
+        }
+    }
+    
+    int top() {
+        if(st.empty()) {
+            return -1;
+        }
+        
+        if(st.top() <= minm) {
+            // minm changed here
+            return minm;
+        } else {
+            return st.top();
+        }
+    }
+    
+    int getMin() {
+        if(st.empty()) {
+            return -1;
+        }
+        
+        return minm;
+    }
+};
+
+
+
+
+
