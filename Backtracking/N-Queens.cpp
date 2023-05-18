@@ -117,3 +117,73 @@ public:
         return res2;
     }
 };
+
+
+
+
+// (checking valid position) OPTIMIZED using HASHING
+
+
+class Solution {
+public:
+    void recur(int n,set<vector<string> >&res,int j,vector<string>temp,int ans,vector<int>&leftRow,vector<int>&upperDiagonal,vector<int>&lowerDiagonal) {
+        if(j == n) {
+            res.insert(temp);
+            return;
+        }
+        
+        for(int k=0 ; k<n ; k++) {
+
+            int x = k;
+            int y = j;
+
+            // validation check over here for the index (x,y)
+            if(leftRow[x]==0 && lowerDiagonal[x+y]==0 && upperDiagonal[n-1+y-x]==0)
+            {
+                // a valid position
+                temp[x][y] = 'Q';
+                ans++;
+                leftRow[x] = 1;
+                lowerDiagonal[x+y] = 1;
+                upperDiagonal[n-1+y-x] = 1;
+                
+                // make a recursive function call
+                recur(n,res,y+1,temp,ans,leftRow,upperDiagonal,lowerDiagonal);
+                
+                // backtrack
+                temp[x][y] = '.';
+                leftRow[x] = 0;
+                lowerDiagonal[x+y] = 0;
+                upperDiagonal[n-1+y-x] = 0;
+                ans--;
+            }
+        }
+    }
+    
+    vector<vector<string>> solveNQueens(int n) {
+        
+        if(n==1) {
+            return{{"Q"}};
+        }
+        
+        set<vector<string>> res;
+        
+        vector<string>temp(n);
+        for(int i=0 ; i<n ; i++) {
+            for(int j=0 ; j<n ; j++) {
+                temp[i].push_back('.');
+            }
+        }
+        
+        int ans=0;
+        
+        vector<int> leftrow(n,0), upperDiagonal(2*n-1,0), lowerDiagonal(2*n-1,0);
+        
+        recur(n,res,0,temp,ans,leftrow,upperDiagonal,lowerDiagonal);
+        
+        vector<vector<string>> res2(res.begin(),res.end());
+        
+        return res2;
+    }
+};
+
