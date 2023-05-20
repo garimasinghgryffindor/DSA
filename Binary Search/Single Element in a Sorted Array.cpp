@@ -1,3 +1,20 @@
+// Solution 1: Using XOR(^)
+    
+int findSingleElement(vector < int > & nums) {
+            
+            int n = nums.size();
+            int elem = 0;
+            for (int i = 0; i < n; i++) {
+                elem = elem ^ nums[i];
+            }
+            
+            return elem;
+        }
+
+
+
+// using binary search
+
 class Solution {
 public:
     int binarySearch(vector<int>&nums, int l , int r) {
