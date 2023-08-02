@@ -95,6 +95,56 @@ public:
 };
 
 
+// using Topological Sort
+// Kahn's Algorithm
+class Solution {
+public:
+    void topological(vector<int>graph[], int idx, vector<bool>&vis, stack<int>&st) {
+        vis[idx] = true;
+        for(int x : graph[idx]) {
+            if(!vis[x])
+                topological(graph, x, vis, st);
+        }
+        st.push(idx);
+    }
+    
+    bool canFinish(int V, vector<vector<int>>& prerequisites) {
+        // if there's a cycle in the graph then not possible to take all courses.
+        // else if there's no cycle -> possible
+        vector<int>graph[V];
+        stack<int>st;
+        vector<bool>vis(V, false);
+        vector<int> topo(V);
+        int count = 0;
+        for(auto x: prerequisites) {
+            int u = x[0], v = x[1];
+            graph[u].push_back(v);
+        }
+       
+        for(int i=0 ; i<V ; i++) {
+            if(!vis[i]) {
+                topological(graph, i, vis, st);
+            }
+        }
+        
+        while(!st.empty()) {
+            topo[st.top()] = count++;
+            st.pop();
+        }
+        
+        for(int i=0 ; i<V ; i++){
+            for(int it: graph[i])
+                if(topo[i] >= topo[it])
+                    return false;
+        }
+        
+        return true;
+    }
+
+};
+
+
+
 
 
 
