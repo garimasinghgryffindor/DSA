@@ -1,6 +1,5 @@
-
 // we are using the coloring algorithm
-
+// using DFS
 class Solution {
 public:
     
@@ -48,6 +47,53 @@ public:
         return true;
     }
 };
+
+
+// using BFS
+class Solution {
+public:
+    
+    bool canFinish(int V, vector<vector<int>>& prerequisites) {
+        // if there's a cycle in the graph then not possible to take all courses.
+        // else if there's no cycle -> possible
+        vector<int>graph[V];
+        for(auto x: prerequisites) {
+            int u = x[0], v = x[1];
+            graph[u].push_back(v);
+        }
+            
+        vector<int>indegree(V, 0);
+        for(int i=0 ; i<V ; i++) {
+            for(int x: graph[i]) {
+                indegree[x]++;
+            }
+        }
+        
+        queue<int>q;
+        for(int i=0 ; i<V ; i++) {
+            if(indegree[i] == 0) {
+                q.push(i);
+            }
+        }
+        
+        int count = 0;
+        while(!q.empty()) {
+            int frnt = q.front();
+            q.pop();
+            count++;
+            for(int x: graph[frnt]) {
+                indegree[x]--;
+                if(indegree[x] == 0) {
+                    q.push(x);
+                }
+            }
+        }
+        
+        return count == V;
+    }
+
+};
+
 
 
 
