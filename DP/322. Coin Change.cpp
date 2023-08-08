@@ -1,3 +1,37 @@
+// USING RECURSION
+class Solution {
+public:
+    int recur(vector<int>&coins, int idx, int amount) {
+        if(amount == 0) return 0;
+        if(amount < 0) return -1;
+        if(idx >= coins.size()) return -1;
+        
+        // either take current coin 
+        int ret1 = recur(coins, idx, amount-coins[idx]);
+        int coins1 = 0;
+        if(ret1 != -1) {
+            coins1 = 1 + ret1;
+        }
+        
+        // or not
+        int ret2 = recur(coins, idx+1, amount);
+        int coins2 = 0;
+        if(ret2 != -1) {
+            coins2 = ret2;
+        }
+        
+        if(ret1 == -1 && ret2 == -1) return -1;
+        if(ret1 == -1) return coins2;
+        if(ret2 == -1) return coins1;
+        return min(coins1, coins2);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        return recur(coins,0,amount);
+    }
+};
+
+
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
