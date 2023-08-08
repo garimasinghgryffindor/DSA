@@ -32,6 +32,43 @@ public:
 };
 
 
+// USING MEMOIZATION
+class Solution {
+public:
+    int recur(vector<int>&coins,int idx,int amount,vector<vector<int>>&dp) {
+        if(amount == 0) return 0;
+        if(amount < 0) return -1;
+        if(idx >= coins.size()) return -1;
+        
+        if(dp[idx][amount] != -2) return dp[idx][amount];
+        
+        // either take current coin 
+        int ret1 = recur(coins, idx, amount-coins[idx], dp);
+        int coins1 = 0;
+        if(ret1 != -1) {
+            coins1 = 1 + ret1;
+        }
+        
+        // or not
+        int ret2 = recur(coins, idx+1, amount, dp);
+        int coins2 = 0;
+        if(ret2 != -1) {
+            coins2 = ret2;
+        }
+        
+        if(ret1 == -1 && ret2 == -1) return dp[idx][amount] = -1;
+        if(ret1 == -1) return dp[idx][amount] = coins2;
+        if(ret2 == -1) return dp[idx][amount] = coins1;
+        return dp[idx][amount] = min(coins1, coins2);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>>dp(n, vector<int>(amount+1, -2));
+        return recur(coins,0,amount,dp);
+    }
+};
+
+
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
