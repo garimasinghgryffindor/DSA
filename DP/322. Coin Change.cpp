@@ -8,17 +8,11 @@ public:
         
         // either take current coin 
         int ret1 = recur(coins, idx, amount-coins[idx]);
-        int coins1 = 0;
-        if(ret1 != -1) {
-            coins1 = 1 + ret1;
-        }
+        int coins1 = 1 + ret1;
         
         // or not
         int ret2 = recur(coins, idx+1, amount);
-        int coins2 = 0;
-        if(ret2 != -1) {
-            coins2 = ret2;
-        }
+        int coins2 = ret2;
         
         if(ret1 == -1 && ret2 == -1) return -1;
         if(ret1 == -1) return coins2;
@@ -44,17 +38,11 @@ public:
         
         // either take current coin 
         int ret1 = recur(coins, idx, amount-coins[idx], dp);
-        int coins1 = 0;
-        if(ret1 != -1) {
-            coins1 = 1 + ret1;
-        }
+        int coins1 = 1 + ret1;
         
         // or not
         int ret2 = recur(coins, idx+1, amount, dp);
-        int coins2 = 0;
-        if(ret2 != -1) {
-            coins2 = ret2;
-        }
+        int coins2 = ret2;
         
         if(ret1 == -1 && ret2 == -1) return dp[idx][amount] = -1;
         if(ret1 == -1) return dp[idx][amount] = coins2;
