@@ -57,6 +57,41 @@ public:
 };
 
 
+// USING TABULATION
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>>dp(n+2, vector<int>(amount+1, 0));
+        
+        for(int i = amount; i >= 0; i--) { dp[n][i] = -1; dp[n+1][i] = -1; }
+        for(int i=n+1; i >= 0; i--) dp[i][0] = 0;
+        
+        for(int i = n-1; i >= 0; i--) {
+            for(int j = 1; j <= amount; j++) {
+                // either take current coin
+                int ret1 = 0;
+                if(j - coins[i] < 0) ret1 = -1;
+                else ret1 = dp[i][j-coins[i]];
+                int coins1 =  1 + ret1;
+
+                // or not
+                int ret2 = 0;
+                ret2 = dp[i+1][j];
+                int coins2 = ret2;
+
+                if(ret1 == -1 && ret2 == -1) { dp[i][j] = -1; continue; }
+                if(ret1 == -1) { dp[i][j] = coins2; continue; }
+                if(ret2 == -1) { dp[i][j] = coins1; continue; }
+                dp[i][j] = min(coins1, coins2);
+            }
+        }
+        
+        return dp[0][amount];
+    }
+};
+
+
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
