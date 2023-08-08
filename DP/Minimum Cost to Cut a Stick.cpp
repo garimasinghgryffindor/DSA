@@ -26,4 +26,33 @@ public:
         sort(cuts.begin(), cuts.end());
         return recur(cuts, 0, n);
     }
+};  // WRONG
+
+
+
+class Solution {
+public:   
+    // USING MEMOIZATION
+    int dp[101][101];
+    vector<int>cuts;
+    int recur(int l, int r, int lCut, int rCut) {
+        if(lCut > rCut) return 0;
+        
+        if(dp[lCut][rCut] != -1) return dp[lCut][rCut];
+        
+        int cost = INT_MAX;
+        for(int i = lCut; i <= rCut; i++) {
+            int costHere = r-l + recur(l, cuts[i], lCut, i-1) + recur(cuts[i], r, i+1, rCut);
+            cost = min(cost, costHere);
+        }
+        
+        return dp[lCut][rCut] = cost;
+    }
+    
+    int minCost(int n, vector<int>& cut) {
+        memset(dp, -1, sizeof(dp));
+        for(int i=0 ; i<cut.size() ; i++) cuts.push_back(cut[i]);
+        sort(cuts.begin(), cuts.end());
+        return recur(0, n, 0, cuts.size() - 1);
+    }
 };
