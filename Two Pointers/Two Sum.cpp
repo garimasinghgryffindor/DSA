@@ -18,11 +18,7 @@ public:
             } else {
                 right--;
             }
-        }
-        
-        if(newNums[left].first + newNums[right].first) {
-            return {newNums[left].second, newNums[right].second};
-        }
+        }      
         
         return {};
     }
