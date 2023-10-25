@@ -42,6 +42,27 @@ public:
     }
 };
 
+// TABULATION
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 1) return nums[0];
+        
+        vector<int>dp(n+1, 0);
+        dp[0+1] = nums[0];
+        dp[1+1] = nums[1];
+        
+        for(int i = 2; i < n; i++) {
+            int sum = nums[i];
+            sum += max( dp[i-2+1], dp[i-3+1] );
+            dp[i+1] = sum;
+        }
+        
+        return max(dp[n-1], dp[n]);
+    }
+};
+
 // DP
 class Solution {
 public:
