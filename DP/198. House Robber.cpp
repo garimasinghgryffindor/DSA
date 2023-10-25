@@ -19,6 +19,28 @@ public:
     }
 };
 
+// MEMOIZATION
+class Solution {
+public:
+    int recur(vector<int>&nums, int i, vector<int>&dp) {
+        if(i < 0) return 0;
+        if(dp[i] != -1) return dp[i];
+        if(i == 1 || i == 0) {
+            return dp[i] = nums[i];
+        }
+        
+        int sum = nums[i];
+        sum += max( recur(nums, i-2, dp), recur(nums, i-3, dp) );
+        return dp[i] = sum;
+    }
+    
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>dp(n,-1);
+        int res = max(recur(nums, n-1, dp), recur(nums, n-2, dp));
+        return res;
+    }
+};
 
 // DP
 class Solution {
