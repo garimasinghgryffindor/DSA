@@ -1,3 +1,27 @@
+// RECURSION
+ void recur(vector<int>&nums, int i, int &res, int currSum) {
+    if(i < 0) return;
+    if(i == 1 || i == 0) {
+        currSum += nums[i];
+        res = max(currSum, res);
+        return;
+    }
+    
+    currSum += nums[i];
+    recur(nums, i-2, res, currSum);
+    recur(nums, i-3, res, currSum);
+}
+
+int rob(vector<int>& nums) {
+    int res = 0;
+    int n = nums.size();
+    recur(nums, n-1, res, 0);
+    recur(nums, n-2, res, 0);
+    return res;
+}
+
+
+// DP
 class Solution {
 public:
     int rob(vector<int>& nums) {
