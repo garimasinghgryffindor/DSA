@@ -1,3 +1,4 @@
+// BRUTE FORCE
 #include <bits/stdc++.h>
 
 namespace std {
@@ -36,4 +37,48 @@ int canYouGetOne(int n, vector<int> &v) {
     bool res = recur(v, n-1, 1, dp);
     if(res) return 1;
     return 0;
+}
+
+
+// GREEDY
+/*
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+
+    Where 'n' denotes the length of the vector 'v'.
+*/
+
+int canYouGetOne(int n, vector<int> &v) {
+    // Initialize the integers 'fourCount' and 'twoCount' equal to '0'.
+    int fourCount = 0, twoCount = 0;
+
+    // Calculate the frequency of '2' and '4'.
+    for (int i = 0; i < n; i++) {
+        if (v[i] == 2) {
+            twoCount++;
+        }
+        else {
+            fourCount++;
+        }
+    }
+
+    // Check the parity of 'twoCount' and 'fourCount' to calculate the answer.
+    if (twoCount % 2 != 0) {
+
+        // 'twoCount' is odd.
+        return 0;
+    }
+    else if (fourCount % 2 == 0) {
+
+        // 'twoCount' and 'fourCount' are even.
+        return 1;
+    }
+    else if (twoCount == 0 || (twoCount == 2 && v[0] == 2 && v[n - 1] == 2)) {
+
+        // 'twoCount' is even and 'fourCount' is odd, so check the first and last element and total number of '2'.
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
