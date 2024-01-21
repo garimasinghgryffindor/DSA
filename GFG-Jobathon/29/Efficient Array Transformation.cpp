@@ -1,3 +1,11 @@
+Efficient Array Transformation
+Accuracy: 5.01%
+Submissions: 298+
+永
+Points: 40
+Geek is a software developer working on an algorithm that processes an integer array arrl] of length n. The values in arr represent data points, and each data point falls within the range of 0 to M-1. Geek's task is to modify the array arr in the minimum number of operations to ensure that the data points are in non-decreasing order.
+In one operation, Geek can increase the value of a data point arr[i] by 1, taking the modulo M of the result. So the goal is to find the minimum number of operations required to make the array arr non-decreasing.
+
 // Recursive
 // and not better
 // you will get it
