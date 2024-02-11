@@ -70,3 +70,41 @@ public:
 };
 
 
+
+// TABULATION
+class Solution {
+public:
+    int mem[71][72][72];
+    
+    int cherryPickup(vector<vector<int>>& grid) {
+        int r = grid.size(), c = grid[0].size();
+        int row = 0, c1 = 0, c2 = c-1;
+        
+        for(int i = r-1; i >= 0; i--) {
+            for(int j = 0; j < c; j++) {
+                for(int k = 0; k < c; k++) {
+                    int temp = grid[i][j] + grid[i][k];
+                    if(j == k) {
+                        temp = grid[i][j];
+                    }
+
+                    int res1 = mem[i+1][j+1][k +1];
+                    int res2 = mem[i+1][j+1 +1][k +1];
+                    int res3 = mem[i+1][j-1 +1][k +1];
+                    int res4 = mem[i+1][j +1][k+1 +1];
+                    int res5 = mem[i+1][j +1][k-1 +1];
+                    int res6 = mem[i+1][j+1 +1][k+1 +1];
+                    int res7 = mem[i+1][j-1 +1][k+1 +1];
+                    int res8 = mem[i+1][j+1 +1][k-1 +1];
+                    int res9 = mem[i+1][j-1 +1][k-1 +1];
+
+                    mem[i][j +1][k +1] = temp + max({res1, res2, res3, res4, res5, res6, res7, res8, res9});
+                }
+            }
+        }
+        
+        
+        return mem[row][c1 +1][c2 +1];
+    }
+};
+
