@@ -23,10 +23,6 @@ public:
                 parent[pv]+=parent[pu];
                 parent[pu] = pv;
             }
-            
-            if(knows[u] || knows[v] || knows[pu] || knows[pv]) {
-                knows[u] = knows[v] = knows[pu] = knows[pv] = true;
-            }
         }
     }
     
@@ -61,13 +57,7 @@ public:
         }
         
         for (int i = 0; i < n; i++) {
-            if (find(i) == find(firstPerson)) {
-                knows[i] = true;
-            }
-        }
-        
-        for(int i = 0; i < n; i++) {
-            if(knows[i] || knows[find(i)]) {
+            if (find(i) == find(0)) {
                 res.emplace_back(i);
             }
         }
