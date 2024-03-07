@@ -28,3 +28,42 @@ public:
         return lcs(s, s, n, n);
     }
 };
+
+
+// TABULATION CODE
+class Solution {
+public:
+    vector<vector<int>>dp;
+    string longestDupSubstring(string s) {
+        // approach 1
+        // using longest common substring/subarray
+        // which is basically by using dp 
+        // brute force approach
+        int n = s.length();
+        dp.resize(n+1, vector<int>(n+1, 0));
+        int ans = 0;
+        int end_i = -1, end_j = -1;
+        
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j <= n; j++) {
+                if(s[i-1] == s[j-1] && i != j) {
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                }
+                if(dp[i][j] > ans) {
+                    ans = dp[i][j];
+                    end_i = i;
+                    end_j = j;
+                }
+            }
+        }
+        
+        string res = "";
+        while(end_i > 0 && end_j > 0 && dp[end_i][end_j] > 0) {
+            res = s[end_i - 1] + res;
+            end_i--;
+            end_j--;
+        }
+        
+        return res;
+    }
+};
