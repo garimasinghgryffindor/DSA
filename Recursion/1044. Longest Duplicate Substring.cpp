@@ -67,3 +67,76 @@ public:
         return res;
     }
 };
+// MEMORY LIMIT EXCEEDED
+
+
+// second approach
+// using trie + binary search
+struct trie {
+    trie *links[26];
+    bool flag = false;
+};
+
+class Trie {
+    public:
+    trie * root;
+    Trie() {
+        root = new trie();
+    }
+    
+    void insert(string word) {
+        trie * node = root;
+        for(int i = 0; i < word.length(); i++) {
+            if(!node->links[word[i]-'a']) {
+                node->links[word[i]-'a'] = new trie();
+            }
+            node = node->links[word[i]-'a'];
+        }
+        node->flag = true;
+    }
+    
+    bool search(string word) {
+        trie * node = root;
+        for(int i = 0; i < word.length(); i++) {
+            if(!node->links[word[i]-'a']) return false;
+            node = node->links[word[i]-'a'];
+        }
+        
+        return node->flag;
+    }
+};
+
+class Solution {
+public:
+    string longestDupSubstring(string s) {
+        Trie obj;
+        
+        int l = 1, r = s.length();
+        string ans = "";
+        while(l <= r) {
+            int mid = l + (r-l)/2;
+            bool found = false;
+            for(int i = 0; i < s.length()-mid+1; i++) {
+                string temp = s.substr(i, mid);
+                if(obj.search(temp)) {
+                    // found a repeated substring
+                    ans = temp;
+                    l = mid+1;
+                    found = true;
+                    break;
+                }
+                obj.insert(temp);
+            }
+            
+            if(!found) r = mid-1;
+        }
+        
+        return ans;
+    }
+};
+// MEMORY LIMIT EXCEEDED
+
+
+
+
+
