@@ -49,3 +49,19 @@ public:
             }
         }
 
+        string res;
+        
+        for(auto x: order) {
+            res.append(mp[x], x);
+        }
+        
+        for(auto x: s) {
+            if(mp.find(x) == mp.end()) {
+                res.push_back(x);
+            }
+        }
+        
+        return res;
+    }
+};
+
