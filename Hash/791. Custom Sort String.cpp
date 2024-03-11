@@ -42,4 +42,10 @@ public:
         for(auto x: order) {
             mp[x] = 0;
         }
-        
+
+        for(auto x: s) {
+            if(mp.find(x) != mp.end()) {
+                mp[x]++;
+            }
+        }
+
