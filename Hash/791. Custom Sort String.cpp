@@ -31,3 +31,15 @@ public:
         return res;
     }
 };
+
+
+// approach 2 using hashing
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        unordered_map<char, int> mp;
+        
+        for(auto x: order) {
+            mp[x] = 0;
+        }
+        
