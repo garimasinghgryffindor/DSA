@@ -16,3 +16,15 @@ public:
         return -1;
     }
 };
+
+
+class Solution {
+public:
+    int pivotInteger(int n) {
+        double x = sqrt(n*(n+1)/2.0);
+        
+        if(x != floor(x)) return -1;
+        
+        return static_cast<int>(x);
+    }
+};
