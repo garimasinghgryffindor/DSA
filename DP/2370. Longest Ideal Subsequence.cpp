@@ -77,3 +77,56 @@ public:
 
 
 
+// TABULATION
+// ANOTHER APPROACH
+// The intuition behind this solution is to iterate through the given string and for each character, determine the count of 
+// consecutive characters within a range of k characters by checking alphabetically to the left and right of the current element until 
+// k and keeping the maximum count. We then update the count of the current character based on the maximum count of surrounding 
+// characters.
+class Solution {
+public:
+    int find(int idx, int k, vector<int>&dp) {
+        int res = 0, cnt=0;
+        int currIdx = idx;
+        
+        while(currIdx >= 0 && cnt<=k){
+            res = max(res, dp[currIdx]);
+            currIdx--;
+            cnt++;
+        }
+        
+        currIdx = idx;
+        cnt = 0;
+        
+        while(currIdx<26 && cnt<=k){
+            res = max(res, dp[currIdx]);
+            currIdx++;
+            cnt++;
+        }
+        
+        return res;
+    }
+    
+    int longestIdealString(string s, int k) {
+        int n = s.length();
+        int res = 0;
+        int cnt = 0;
+        
+        vector<int>dp(26, 0);
+        
+        for(int i = 0; i < n; i++) {
+            int x = s[i]-'a';
+            dp[x] = find(x , k, dp)+1;
+            res = max(res, dp[x]);
+        }
+        
+        return res;
+    }
+};
+
+
+
+
+
+
+
