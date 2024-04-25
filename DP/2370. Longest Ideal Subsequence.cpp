@@ -52,4 +52,28 @@ public:
 // MLE
 
 
+// TABULATION
+class Solution {
+public:
+    int longestIdealString(string s, int k) {
+        int n = s.length();
+        vector<int>dp(n+1, 1);
+        dp[0] = 0;
+        int res = 0;
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(abs(s[i]-s[j]) <= k) {
+                    dp[i+1] = max(dp[i+1], 1 + dp[j+1]);
+                }
+            }
+            res = max(res, dp[i+1]);
+        }
+        
+        return res;
+    }
+};
+// TLE
+
+
 
