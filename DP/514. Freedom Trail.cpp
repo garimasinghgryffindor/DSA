@@ -64,3 +64,40 @@ public:
         return recur(positions, key, 0, 0);
     }
 };
+
+
+// TABULATION
+class Solution {
+public:
+    int n;
+    vector<vector<int>> dp;
+    
+    int findRotateSteps(string ring, string key) {
+        int res = 0;
+        unordered_map<char, vector<int>> positions;
+        n = ring.length();
+        int m = key.length();
+        dp.resize(m+1, vector<int>(n+1, INT_MAX));
+        
+        for(int i = 0; i < n; i++) {
+            positions[ring[i]].push_back(i);
+            dp[m][i] = 0;
+        }
+        
+        for(int idx = m-1; idx >= 0; idx--) {
+            for(int prev = 0; prev < n; prev++) {
+                // int res = INT_MAX;
+                int curr = 0;
+                for(int x: positions[key[idx]]) {
+                    int moves = abs(x-prev);
+                    moves = min(moves, min(x, prev)+n-max(x, prev) );
+                    curr = moves + dp[idx+1][x] + 1;
+                    dp[idx][prev] = min(dp[idx][prev], curr);
+                }
+                // return dp[idx][prev] = res;
+            }
+        }
+        
+        return dp[0][0];
+    }
+};
