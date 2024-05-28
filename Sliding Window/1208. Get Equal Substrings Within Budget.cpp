@@ -5,7 +5,6 @@ public:
         int curr = 0;
         int i;
         for(i = 0; i < s.length(); i++) {
-            // cout<<"executed...... "<<i+1<<endl;
             if(curr + abs(s[i] - t[i]) <= maxCost) {
                 curr += abs(s[i] - t[i]);
             } else {
