@@ -1,3 +1,4 @@
+// USING SORTING
 class Solution {
 public:
     int heightChecker(vector<int>& heights) {
@@ -10,3 +11,8 @@ public:
         return res;
     }
 };
+
+
+// USING COUNTING SORT
+
+
