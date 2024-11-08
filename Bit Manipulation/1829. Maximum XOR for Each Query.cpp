@@ -8,13 +8,7 @@ public:
             res[i] = res[i-1] ^ nums[i];
         }
         
-        int num = 0;
-        int i = 0;
-        while(i < maximumBit) {
-            num = num | (1 << i);
-            i++;
-        }
-        
+        int num = (1 << maximumBit) - 1;
         for(int i = 0; i < n; i++) {
             res[i] = num ^ res[i];
         }
