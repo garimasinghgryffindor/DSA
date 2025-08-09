@@ -34,3 +34,26 @@ public:
         return res;
     }
 };
+
+
+// better code
+
+class Solution {
+public:
+    int maximumLengthSubstring(string s) 
+    {
+        unordered_map<char, int> unmap;
+        int maxLength = 0, left = 0;
+        for (int right = 0; right < s.size(); right++)
+        {
+            unmap[s[right]]++;
+            while (unmap[s[right]] > 2)
+            {
+                unmap[s[left]]--;
+                left++;
+            }
+            maxLength = max(maxLength, right - left + 1);
+        }
+        return maxLength;
+    }
+};
