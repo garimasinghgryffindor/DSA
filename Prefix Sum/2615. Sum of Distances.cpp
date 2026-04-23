@@ -20,16 +20,20 @@ public:
             long long leftSum = 0;
             int groupsz = group.size();
 
+            cout<<"num: "<<x<<endl;
+            cout<<"sum: "<<sum<<endl;
             for(int i = 0; i < groupsz; i++) {
                 long long rightSum = sum - leftSum - group[i];
                 long long left = 1LL * group[i] * i - leftSum;
                 long long right = rightSum - 1LL * group[i] * (groupsz - i - 1);
-
-                res[group[i]] = left + right;
+                cout<<left<<" <-L   R->"<<rightSum<<endl;
+                res[group[i]] = left + rightSum;
                 leftSum += group[i];
-            }
+            } cout<<endl;
         }
 
         return res;
     }
 };
+
+// https://www.canva.com/design/DAHHsic_qnk/zrzvof9fpBhBWPOjUPs_gA/edit?ui=e30
